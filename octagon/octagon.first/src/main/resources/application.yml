@@ -1,0 +1,41 @@
+server:
+  port: 8087
+
+# service-url:
+#   myconsul-service: http://127.0.0.1:8083
+#   # myconsul-service: lb://myconsul
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: octagon
+  cloud:
+    consul:
+      host: 127.0.0.2
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+      config:
+        # 是否启用配置中心功能
+        enabled: true
+        # 设置配置值的格式
+        format: YAML
+        # 设置配置所在目录
+        # prefix: config
+        # 设置配置的分隔符
+        # profile-separator: ':'
+        # 配置key的名字，由于Consul是K/V存储，配置存储在对应K的V中
+        data-key: data
+    # gateway:
+    #   routes:
+    #       # 路由的ID
+    #     - id: path_route
+    #       # 匹配后路由地址
+    #       uri: ${service-url.myconsul-service}
+    #       predicates:
+    #         # 断言，路径相匹配的进行路由
+    #         - Path=/config/*
+    #     - id: path_route2
+    #       uri: ${service-url.myconsul-service}
+    #       predicates: [Path=/devices/*]
